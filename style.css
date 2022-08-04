@@ -1,0 +1,36 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+#nav {
+    background: #333;
+    display: flex;
+    padding: 10px;
+}
+#title {
+    color: #fff;
+    margin-right: 1rem;
+}
+#search_area {
+    padding: 0.3rem;
+}
+#search_word {
+    height: 100%;
+    font-size: 1.2rem;
+    padding: 0 0.5rem;
+}
+#search_button {
+    margin-left: 10px;
+    height: 100%;
+    cursor: pointer;
+    padding: 0.2rem 1rem;
+}
+
+.row {
+    display: flex;
+}
+.row img {
+    object-fit: cover;
+}
