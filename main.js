@@ -8,6 +8,16 @@
 
     button.addEventListener("click", () => {
         let word = input.value.split(" ");
+        word = word.filter(w => {
+            if (w != "") {
+                return w;
+            }
+        });
+
+        if (word.length == 0 ) {
+            return ;
+        }
+
         let url = UnsplashAPI + word.join(",");
 
         let div = document.createElement("div");
