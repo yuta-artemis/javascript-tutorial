@@ -3,21 +3,26 @@
     <head>
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="viewport" content="wclassth=device-wclassth, initial-scale=1.0" />
         <link rel="stylesheet" href="./style.css" />
         <title>JavaScript 課題ページ</title>
     </head>
     <body>
-        <div id="nav">
+        <div class="nav">
             <div>
-                <h1 id="title">Image Search</h1>
+                <h1 class="title">Image Search</h1>
             </div>
-            <div id="search_area">
-                <input id="search_word" type="text" placeholder="cat dog" />
-                <button id="search_button">Search</button>
+            <div class="search_area">
+                <input class="search_word" type="text" placeholder="cat dog" />
+                <button class="search_button">Search</button>
             </div>
+            <div class="history_area"></div>
         </div>
-        <div id="draw_area"></div>
+        <div class="draw_area"></div>
+
+        <div class="modal_wrapper">
+            <div class="modal"></div>
+        </div>
         <script src="./main.js"></script>
     </body>
 </html>
