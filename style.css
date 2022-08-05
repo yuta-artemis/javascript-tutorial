@@ -12,33 +12,81 @@
     aspect-ratio: 1 / 1;
     vertical-align: bottom;
     padding: 5px;
-    cursor: pointer;
 }
 
 .nav {
     background: #333;
     display: flex;
-    padding: 10px;
+    padding: 10px 0;
+}
+.nav > div {
+    padding: 0 1rem;
+    border-right: 1px solid #000;
+}
+.nav > div:last-child {
+    border: none;
 }
 .title {
     color: #fff;
-    margin-right: 1rem;
     font-family: 'Oleo Script', cursive;
 }
+.random_icon {
+    font-size: 2rem;
+    color: #fff;
+    cursor: pointer;
+    vertical-align: bottom;
+}
 .search_area {
-    padding: 0.3rem;
 }
 .search_word {
     height: 100%;
     font-size: 1.2rem;
-    padding: 0 0.5rem;
+    padding: 0 1rem;
+    border-radius: 25px;
+    border: none;
+    outline: none;
+    background: #666;
+    color: #333;
+}
+.search_word:focus {
+    outline: none;
+    border: none;
+    background: #efefef;
 }
 .search_button {
-    margin-left: 10px;
     height: 100%;
     cursor: pointer;
     padding: 0.2rem 1rem;
+    vertical-align: bottom;
+    background: transparent;
+    color: #fff;
+    border-radius: 50%;
+    border: none;
+    background: #666;
 }
+.search_button:hover {
+    background: #999;
+}
+.search_button:active {
+    background-color: #efefef;
+    color: #999;
+}
+.history_area {
+    display: flex;
+    align-items: center;
+    padding: 0 1rem;
+}
+.history_area div {
+    padding: 5px 10px;
+    background: #efefef;
+    border-radius: 20px;
+    cursor: pointer;
+    margin-right: 5px;
+}
+.history_area div:hover {
+    opacity: 0.7;
+}
+
 
 .nav ul {
     display: flex;
@@ -49,17 +97,4 @@
 }
 .page.active {
     display: block;
-}
-
-.history_area{
-    display: flex;
-    align-items: center;
-}
-.history_area span {
-    display: block;
-    padding: 5px 10px;
-    background: #fff;
-    border-radius: 20px;
-    cursor: pointer;
-    margin-right: 10px;
 }

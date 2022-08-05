@@ -5,20 +5,26 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="wclassth=device-wclassth, initial-scale=1.0" />
         <link rel="stylesheet" href="./style.css" />
+        <link rel ="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
         <title>JavaScript 課題ページ</title>
     </head>
     <body>
         <div class="nav">
-            <div>
-                <h1 class="title">Image Search</h1>
+            <div class="title">
+                <h1>Image Search</h1>
             </div>
             <div class="search_area">
                 <input class="search_word" type="text" placeholder="cat dog" />
-                <button class="search_button">Search</button>
+                <button class="search_button"><i class="fa-solid fa-magnifying-glass"></i></button>
+            </div>
+            <div class="random_icon">
+                <i title="roll the dice" class="fa-solid fa-dice"></i>
             </div>
             <div class="history_area"></div>
         </div>
-        <div class="draw_area"></div>
+        <div class="draw_area">
+            <div class="random page active"></div>
+        </div>
         <script src="./main.js"></script>
     </body>
 </html>
