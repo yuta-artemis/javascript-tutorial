@@ -8,11 +8,6 @@
 
     let draw_area = document.querySelector(".draw_area");
 
-    let modal_wrapper = document.querySelector('.modal_wrapper');
-    modal_wrapper.addEventListener('click', () => {
-        modal_wrapper.classList.toggle('show');
-        modal_wrapper.querySelector('img').remove();
-    });
 
     button.addEventListener("click", () => {
         // inputから検索語句を取得
@@ -65,12 +60,6 @@
         for (let i = 0; i < 50; i++) {
             let img = new Image();
             img.setAttribute("src", url + "/" + Math.floor(Math.random() * (new Date()).getTime()) );
-            img.addEventListener('click', (event) => {
-                let modal_wrapper = document.querySelector('.modal_wrapper');
-                let modal = document.querySelector('.modal');
-                modal.appendChild(event.target.cloneNode());
-                modal_wrapper.classList.toggle('show');
-            });
             page.appendChild(img);
         }
 
