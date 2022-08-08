@@ -28,7 +28,7 @@
 }
 .nav > div {
     padding: 0 1rem;
-    border-right: 1px solid #000;
+    border-right: 1px solid #444;
 }
 .nav > div:last-child {
     border: none;
@@ -41,11 +41,14 @@
     color: #fff;
     font-family: 'Oleo Script', cursive;
 }
-.random_icon i{
+.random_icon i {
     font-size: 2rem;
     color: var(--passive--bg-color);
     cursor: pointer;
     vertical-align: bottom;
+}
+.random_icon i:hover {
+    color: #999;
 }
 .random_icon i.show {
     color: var(--active--bg-color);
@@ -68,6 +71,9 @@
     outline: none;
     background: var(--passive--bg-color);
     color: var(--passive--color);
+}
+.search_word::placeholder {
+    color: #888;
 }
 .search_word:focus {
     outline: none;
