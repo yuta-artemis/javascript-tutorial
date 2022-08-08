@@ -1,116 +1,206 @@
-(()=> {
-const UnsplashAPI = {
-    random: "https://source.unsplash.com/random/",
-    search: "https://source.unsplash.com/featured/?",
-}
-// tab, pageを管理する配列
-let tabs = [];
-let pages = [];
-
-// 全てのtabを非表示/無効化する
-function disableTab() {
-    tabs.forEach( elem => elem.classList.remove('active') );
-    pages.forEach( elem => elem.classList.remove('active') );
-}
-// 渡されたtabと同じindexのpageを表示/有効化する
-function enableTab( tab ) {
-    tab.classList.add('active');
-    let index = tabs.indexOf(tab);
-    pages[index].classList.add('active');
-}
-
-// tab, pageを生成し管理用配列とdocumentへ追加
-// 他のtabやpageを無効化し、生成したtabとpageを有効化する
-function addNewTab( tabName ) {
-    let tab = document.createElement('div');
-        tab.classList.add('.history', 'active');
-        tab.textContent = tabName;
-    let page = document.createElement('div');
-        page.classList.add('page', 'active');
-    
-    disableTab();
-
-    document.querySelector('.history_area').appendChild(tab);
-    document.querySelector('.draw_area').appendChild(page);
-
-    tabs.push(tab);
-    pages.push(page);
-
-    return [tab, page];
-}
-
-// 検索ボタン押下時の処理
-let search_word = document.querySelector('.search_word');
-document.querySelector('.search_area form').addEventListener('submit', event => {
-    event.preventDefault();
-    // 検索語句の取得とクリア
-    let value = search_word.value;
-    search_word.value = "";
-    // 検索語句が設定されているか確認
-    let words = value.split(" ");
-    words = words.filter( word => word != "" ).join(",");
-    if (words == "") {
-        return false;
+class Base {
+    constructor() {
+        this.elem = document.createElement("div");
+        this.showClassName = "show";
+        this.hideClassName = "hide";
     }
-
-    // 検索語句をタブ名としてtab, pageの追加。
-    let [tab, page] = addNewTab( words );
-
-    // 検索語句から画像を50枚生成
-    // pageに追加
-    for (let i=0; i<50; i++) {
-        let img = new Image();
-        img.setAttribute('src', UnsplashAPI["search"] + words + "/" + Math.floor((Math.random() * 10000000)));
-        page.appendChild(img);
+    show() {
+        this.elem.classList.remove(this.hideClassName);
+        this.elem.classList.add(this.showClassName);
     }
-});
-
-// 検索履歴押下時の処理
-document.querySelector('.history_area').addEventListener('click', event => {
-    if (event.target.tagName !== "DIV" || event.target.classList.contains('active')) {
-        return ;
+    hide() {
+        this.elem.classList.remove(this.showClassName);
+        this.elem.classList.add(this.hideClassName);
     }
+    getElement() {
+        return this.elem;
+    }
+}
+class Tab extends Base {
+    constructor(tabName) {
+        super();
 
-    disableTab();
-    enableTab(event.target);
-});
+        this.elem.classList.add('tab');
 
-// 初回表示時に、ランダムな画像を50枚表示させる
-function init() {
-    // サイコロをtabとして
-    // 初回表示ページをpageとして登録
-    let tab = document.querySelector('.random_icon');
-    let page = document.querySelector('.random.page');
-    tabs.push(tab);
-    pages.push(page);
-
-    // pageの中にランダムな画像を50枚生成
-    function makeRandomImage( page ) {
-        for (let i=0; i<50; i++) {
-            let img = new Image();
-            img.setAttribute('src', UnsplashAPI["random"] + Math.floor((Math.random() * 10000000)));
-            page.appendChild(img);
+        if (tabName) {
+            this.setTabName(tabName);
         }
     }
+    setTabName(tabName) {
+        this.elem.textContent = tabName;
+    }
+}
+class Panel extends Base {
+    constructor() {
+        super();
 
-    // pageの中から全ての子要素を消す
-    function removeImages( page ) {
-        Array.from( page.children ).forEach( elem => elem.remove() );
+        this.elem.classList.add('panel');
+    }
+}
+
+// tabとpanelを紐づけて管理するクラス
+class Page {
+    constructor() {
+        this.tabList = [];
+        this.currentFocus = null;
     }
 
-    // サイコロ押下時の処理
-    // tabを無効化
-    // pageから子要素をすべて消し、ランダムな画像を50枚生成
-    // tabを有効化
-    tab.addEventListener('click', event => {
-        disableTab();
-        removeImages(page);
-        makeRandomImage(page);
-        enableTab(tab);
+    setTabArea( tabArea ) {
+        this.tabArea = tabArea;
+    }
+    setPanelArea( panelArea ) {
+        this.panelArea = panelArea;
+    }
+
+    addTab(tabName, index) {
+        const tab = new Tab(tabName);
+        const panel = new Panel();
+        // 新しいタブの挿入位置が指定されていなければ、挿入位置として末尾を指定する
+        if (!index) {
+            index = this.tabList.length;
+        }
+
+        this.tabList.splice(index, 0, [tab, panel]);
+        // 新しく生成したタブにフォーカスする
+        this.focus(index);
+        // 新しく生成したタブとパネルを返す
+        return [tab, panel];
+    }
+    removeTab(index) {
+        const ret = this.tabList[index];
+        if (!ret) {
+            return;
+        }
+        // 削除するタブが現在開いているタブだった場合、先頭のタブにフォーカスする
+        if (this.currentFocus === index) {
+            this.focus(0);
+        }
+        // tabListからindex番目のタブを削除する
+        this.tabList.splice(index, 1);
+        // 削除したタブとパネルを返す
+        return ret;
+    }
+    _unfocus() {
+        // 現在開いているタブが存在しなければ何もしない
+        if (this.currentFocus === null) {
+            return;
+        }
+        // タブリストから現在開いているタブを取得する
+        const [tab, panel] = this.tabList[this.currentFocus];
+        tab.hide();
+        panel.hide();
+        this.currentFocus = null;
+    }
+    focus(index) {
+        this._unfocus();
+        const [tab, panel] = this.tabList[index];
+        tab.show();
+        panel.show();
+        this.currentFocus = index;
+    }
+    focusElement(tabElem) {
+        const self = this;
+        this.tabList.forEach((item, index) => {
+            if (item[0].elem === tabElem) {
+                self.focus(index);
+            }
+        });
+    }
+
+    // draw() {
+    //     const self = this;
+    //     // タブを追加する
+    //     // 既に追加されて画面に描画されているタブは追加されない
+    //     this.tabList.forEach(item => {
+    //         self.tabArea.appendChild( item[0].elem );
+    //         self.panelArea.appendChild( item[1].elem );
+    //     });
+    // }
+}
+
+
+function main() {
+    // UnsplashAPIのURL定義
+    const UnsplashAPI = {
+        random: "https://source.unsplash.com/random/",
+        search: "https://source.unsplash.com/featured/?",
+    }
+
+    function insertImage50(target, src) {
+        for (let i=0; i<50; i++) {
+            let img = new Image();
+            img.setAttribute('src', src + Math.floor((Math.random() * 10000000)));
+            target.appendChild(img);
+        }
+        return target;
+    }
+
+    // 履歴を表示するエリア、画像を表示させるエリアの取得
+    const history_area = document.querySelector('.history_area');
+    const draw_area = document.querySelector('.draw_area');
+
+    const page = new Page();
+    page.setTabArea(history_area);
+    page.setPanelArea(draw_area);
+
+    // 履歴をクリックしたときの処理
+    history_area.addEventListener('click', event => {
+        const target = event.target;
+        if (!target.classList.contains('tab')) {
+            return ;
+        }
+        if (target.classList.contains('hide')) {
+            page.focusElement(target);
+        }
     });
 
-    makeRandomImage(page);
-}
-init();
+    // 検索実行時の処理
+    const form = document.querySelector('.search_area form');
+    const input = document.querySelector('.search_word');
+    function onSubmit(event) {
+        event.preventDefault();
+        // 検索語句の取得とクリア
+        const value = input.value;
+        input.value = "";
+        // 検索語句が空の場合、処理を終える
+        let words = value.split(" ");
+        words = words.filter( word => word != "" ).join(",");
+        if (words == "") {
+            return false;
+        }
+        
+        const [tab, panel] = page.addTab(words);
+        insertImage50(panel.elem, UnsplashAPI["search"] + words + "/");
+        page.tabList.slice(1).forEach(item => {
+            page.tabArea.appendChild( item[0].elem );
+            page.panelArea.appendChild( item[1].elem );
+        });
+    }
+    form.addEventListener('submit', onSubmit);
 
-})();
+
+    // tabとpanelを生成
+    // tabListの0番目＝現在生成したtabのelemをrando_iconにすり替えpageに管理させる
+    const [tab, panel] = page.addTab();
+    page.tabList[0][0].elem = document.querySelector('.random_icon');
+    page.panelArea.appendChild(panel.elem);
+
+    // ランダムページの初回表示
+    function makeRandomImage() {
+        // ランダム表示をするときに画像の一括削除を用意にするため、wrapperとしてdivを作成
+        // その子要素としてimgを挿入
+        const div = document.createElement('div');
+        insertImage50(div, UnsplashAPI["random"]);
+        panel.elem.appendChild(div);
+    }
+    makeRandomImage();
+
+    // ランダムアイコンをクリックしたときの処理
+    document.querySelector('.random_icon').addEventListener('click', event => {
+        const target = event.target;
+        page.focus(0);
+        panel.elem.firstChild.remove();
+        makeRandomImage();
+    });
+}
+main();

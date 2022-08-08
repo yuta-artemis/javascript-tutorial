@@ -94,9 +94,9 @@
     display: flex;
 }
 
-.page {
+.panel.hide {
     display: none;
 }
-.page.active {
+.panel.show {
     display: block;
 }
