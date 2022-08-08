@@ -41,7 +41,8 @@ function addNewTab( tabName ) {
 
 // 検索ボタン押下時の処理
 let search_word = document.querySelector('.search_word');
-document.querySelector('.search_button').addEventListener('click', event => {
+document.querySelector('.search_area form').addEventListener('submit', event => {
+    event.preventDefault();
     // 検索語句の取得とクリア
     let value = search_word.value;
     search_word.value = "";

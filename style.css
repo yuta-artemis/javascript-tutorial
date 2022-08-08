@@ -12,6 +12,10 @@
     aspect-ratio: 1 / 1;
     vertical-align: bottom;
     padding: 5px;
+    visibility: hidden;
+}
+.draw_area img.show {
+    visibility: visible;
 }
 
 .nav {
@@ -36,7 +40,9 @@
     cursor: pointer;
     vertical-align: bottom;
 }
-.search_area {
+.search_area form{
+    height: 100%;
+    width: 100%;
 }
 .search_word {
     height: 100%;
