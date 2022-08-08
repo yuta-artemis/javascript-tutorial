@@ -1,3 +1,6 @@
+(() => {
+
+"use strict";
 class Base {
     constructor() {
         this.elem = document.createElement("div");
@@ -207,3 +210,5 @@ function main() {
     });
 }
 main();
+
+})();
