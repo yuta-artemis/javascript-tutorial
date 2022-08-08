@@ -25,6 +25,8 @@
     background: #333;
     display: flex;
     padding: 10px 0;
+    position: sticky;
+    top: 0;
 }
 .nav > div {
     padding: 0 1rem;
