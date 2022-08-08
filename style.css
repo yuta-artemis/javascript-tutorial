@@ -12,10 +12,6 @@
     aspect-ratio: 1 / 1;
     vertical-align: bottom;
     padding: 5px;
-    visibility: hidden;
-}
-.draw_area img.show {
-    visibility: visible;
 }
 
 .nav {
