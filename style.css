@@ -6,6 +6,13 @@
     box-sizing: border-box;
 }
 
+:root {
+    --active--bg-color: #efefef;
+    --active--color: #333;
+    --passive--bg-color: #666;
+    --passive--color: #efefef;
+}
+
 .draw_area img {
     width: calc(100% / 5);
     object-fit: cover;
@@ -26,19 +33,31 @@
 .nav > div:last-child {
     border: none;
 }
-.title {
+.nav_inner {
+    display: flex;
+    align-items: center;
+}
+.title a{
     color: #fff;
     font-family: 'Oleo Script', cursive;
 }
-.random_icon {
+.random_icon i{
     font-size: 2rem;
-    color: #fff;
+    color: var(--passive--bg-color);
     cursor: pointer;
     vertical-align: bottom;
+}
+.random_icon i.show {
+    color: var(--active--bg-color);
 }
 .search_area form{
     height: 100%;
     width: 100%;
+    display: flex;
+}
+.search_area input {
+    flex: 1;
+    margin-right: 5px;
 }
 .search_word {
     height: 100%;
@@ -47,13 +66,14 @@
     border-radius: 25px;
     border: none;
     outline: none;
-    background: #666;
-    color: #333;
+    background: var(--passive--bg-color);
+    color: var(--passive--color);
 }
 .search_word:focus {
     outline: none;
     border: none;
-    background: #efefef;
+    background: var(--active--bg-color);
+    color: var(--active--color);
 }
 .search_button {
     height: 100%;
@@ -61,17 +81,17 @@
     padding: 0.2rem 1rem;
     vertical-align: bottom;
     background: transparent;
-    color: #fff;
+    color: #ccc;
     border-radius: 50%;
     border: none;
-    background: #666;
+    background: var(--passive--bg-color);
 }
 .search_button:hover {
     background: #999;
 }
 .search_button:active {
-    background-color: #efefef;
-    color: #999;
+    background-color: var(--active--bg-color);
+    color: var(--active--color);
 }
 .history_area {
     display: flex;
@@ -80,23 +100,40 @@
 }
 .history_area div {
     padding: 5px 10px;
-    background: #efefef;
+    background: var(--passive--bg-color);
     border-radius: 20px;
     cursor: pointer;
     margin-right: 5px;
+    color: var(--passive--color);
 }
 .history_area div:hover {
     opacity: 0.7;
 }
-
-
-.nav ul {
-    display: flex;
+.history_area div.show {
+    background: var(--active--bg-color);
+    color: var(--active--color);
 }
+
 
 .panel.hide {
     display: none;
 }
 .panel.show {
     display: block;
+}
+
+@media (max-width: 767px) { 
+
+    .title {
+        text-align: center;
+    }
+    .nav {
+        display: block;
+    }
+    .nav > div {
+        margin-bottom: 1rem;;
+    }
+    .search_area {
+        height: 3rem;
+    }
 }

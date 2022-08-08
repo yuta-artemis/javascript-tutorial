@@ -92,7 +92,9 @@ class Page {
         this.currentFocus = null;
     }
     focus(index) {
+        // 現在開いているタブを非表示にする
         this._unfocus();
+        // 指定されたindexのタブを表示し、現在開いているタブとして設定する
         const [tab, panel] = this.tabList[index];
         tab.show();
         panel.show();
@@ -126,13 +128,14 @@ function main() {
         search: "https://source.unsplash.com/featured/?",
     }
 
+    // 50枚画像を生成して、指定のノードに挿入する
+    // srcの末尾にはランダムな整数を与えてUnsplashの画像がキャッシュされないようにする
     function insertImage50(target, src) {
         for (let i=0; i<50; i++) {
             let img = new Image();
             img.setAttribute('src', src + Math.floor((Math.random() * 10000000)));
             target.appendChild(img);
         }
-        return target;
     }
 
     // 履歴を表示するエリア、画像を表示させるエリアの取得
@@ -182,10 +185,10 @@ function main() {
     // tabとpanelを生成
     // tabListの0番目＝現在生成したtabのelemをrando_iconにすり替えpageに管理させる
     const [tab, panel] = page.addTab();
-    page.tabList[0][0].elem = document.querySelector('.random_icon');
+    page.tabList[0][0].elem = document.querySelector('.random_icon i');
     page.panelArea.appendChild(panel.elem);
 
-    // ランダムページの初回表示
+    // ランダムページの表示
     function makeRandomImage() {
         // ランダム表示をするときに画像の一括削除を用意にするため、wrapperとしてdivを作成
         // その子要素としてimgを挿入
@@ -196,7 +199,7 @@ function main() {
     makeRandomImage();
 
     // ランダムアイコンをクリックしたときの処理
-    document.querySelector('.random_icon').addEventListener('click', event => {
+    document.querySelector('.random_icon i').addEventListener('click', event => {
         const target = event.target;
         page.focus(0);
         panel.elem.firstChild.remove();
