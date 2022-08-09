@@ -18,6 +18,9 @@ class Base {
     getElement() {
         return this.elem;
     }
+    setElement(elem) {
+        this.elem = elem;
+    }
 }
 class Tab extends Base {
     constructor(tabName) {
@@ -135,15 +138,15 @@ function main() {
     // srcの末尾にはランダムな整数を与えてUnsplashの画像がキャッシュされないようにする
     function insertImage50(target, src) {
         for (let i=0; i<50; i++) {
-            let img = new Image();
+            let img = document.createElement('img');
             img.setAttribute('src', src + Math.floor((Math.random() * 10000000)));
             target.appendChild(img);
         }
     }
 
     // 履歴を表示するエリア、画像を表示させるエリアの取得
-    const history_area = document.querySelector('.history_area');
-    const draw_area = document.querySelector('.draw_area');
+    const history_area = document.querySelector('#history');
+    const draw_area = document.querySelector('#main');
 
     const page = new Page();
     page.setTabArea(history_area);
@@ -161,8 +164,8 @@ function main() {
     });
 
     // 検索実行時の処理
-    const form = document.querySelector('.search_area form');
-    const input = document.querySelector('.search_word');
+    const form = document.querySelector('#search_form');
+    const input = document.querySelector('#search_input');
     function onSubmit(event) {
         event.preventDefault();
         // 検索語句の取得とクリア
@@ -188,7 +191,7 @@ function main() {
     // tabとpanelを生成
     // tabListの0番目＝現在生成したtabのelemをrando_iconにすり替えpageに管理させる
     const [tab, panel] = page.addTab();
-    page.tabList[0][0].elem = document.querySelector('.random_icon i');
+    page.tabList[0][0].elem = document.querySelector('#random_button');
     page.panelArea.appendChild(panel.elem);
 
     // ランダムページの表示
@@ -202,7 +205,7 @@ function main() {
     makeRandomImage();
 
     // ランダムアイコンをクリックしたときの処理
-    document.querySelector('.random_icon i').addEventListener('click', event => {
+    document.querySelector('#random_button').addEventListener('click', event => {
         const target = event.target;
         page.focus(0);
         panel.elem.firstChild.remove();

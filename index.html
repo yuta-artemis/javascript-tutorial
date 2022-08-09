@@ -1,46 +1,33 @@
 <!DOCTYPE html>
 <html lang="ja">
-    <head>
-        <meta charset="UTF-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta
-            name="viewport"
-            content="wclassth=device-wclassth, initial-scale=1.0"
-        />
-        <link rel="stylesheet" href="./style.css" />
-        <link
-            rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
-        />
-        <title>JavaScript 課題ページ</title>
-    </head>
-    <body>
-        <div class="nav">
-            <div class="title">
-                <h1><a href=".">Image Search</a></h1>
-            </div>
-            <div class="search_area">
-                <form action="#">
-                    <input
-                        class="search_word"
-                        type="text"
-                        placeholder="cat dog"
-                    />
-                    <button class="search_button">
-                        <i class="fa-solid fa-magnifying-glass"></i>
-                    </button>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="common.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <title>JavaScript 課題ページ</title>
+</head>
+<body>
+    <div class="container">
+        <header id="header">
+            <h1 id="title"><a id="title_link" href=".">Image Search</a></h1>
+            <div id="search">
+                <form id="search_form" action=".">
+                    <input id="search_input" type="text" placeholder="cat dog ...">
+                    <button id="search_button"><i class="fa-solid fa-magnifying-glass"></i></button>
                 </form>
             </div>
-            <div class="nav_inner">
-                <div class="random_icon">
-                    <i title="roll the dice" class="fa-solid fa-dice"></i>
+            <div class="wrapper">
+                <div id="random">
+                    <i id="random_button" class="fa-solid fa-dice"></i>
                 </div>
-                <div class="history_area"></div>
+                <div id="history"></div>
             </div>
-        </div>
-        <div class="draw_area">
-            <div class="random page active"></div>
-        </div>
-        <script src="./main.js"></script>
-    </body>
+        </header>
+        <main id="main"></main>
+    </div>
+    <script src="main.js"></script>
+</body>
 </html>
