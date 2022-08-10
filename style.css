@@ -29,18 +29,3 @@
     display: block;
 }
 
-@media (max-width: 767px) { 
-
-    .title {
-        text-align: center;
-    }
-    .nav {
-        display: block;
-    }
-    .nav > div {
-        margin-bottom: 1rem;;
-    }
-    .search_area {
-        height: 3rem;
-    }
-}
