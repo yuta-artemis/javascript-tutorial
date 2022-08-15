@@ -1,6 +1,6 @@
 (() => {
-
 "use strict";
+
 class Base {
     constructor() {
         this.elem = document.createElement("div");
@@ -44,7 +44,9 @@ class Panel extends Base {
     }
 }
 
-// tabとpanelを紐づけて管理するクラス
+/*
+ * tabとpanelを紐づけて管理するクラス
+ */
 class Page {
     constructor() {
         this.tabList = [];
@@ -114,16 +116,47 @@ class Page {
             }
         });
     }
+}
 
-    // draw() {
-    //     const self = this;
-    //     // タブを追加する
-    //     // 既に追加されて画面に描画されているタブは追加されない
-    //     this.tabList.forEach(item => {
-    //         self.tabArea.appendChild( item[0].elem );
-    //         self.panelArea.appendChild( item[1].elem );
-    //     });
-    // }
+/*
+ * 重複しないランダムな文字列を生成、管理するクラス
+ */
+class UUID {
+    constructor() {
+        this.charset = [
+            'abcdefghijklmnopqrstuvwxyz',
+            'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
+            '0123456789'
+        ].join('');
+        // 重複監視用の配列
+        this.memory = {};
+    }
+    generate(length) {
+        let result;
+        const memory = this.initMemory(length);
+        // 生成したuuidの数が生成できる数を上回った場合、falseを返す
+        if (memory.length >= this.charset.length ** length) {
+            return false;
+        }
+
+        do {
+            const arr = new Uint32Array(length);
+            const randomArr = Array.from(crypto.getRandomValues(arr));
+            result = randomArr.map((n) => {
+                return this.charset[n % this.charset.length];
+            }).join('');
+        // 生成した値がmemoryに含まれていたら、生成を繰り返す
+        } while(memory.includes(result));
+
+        memory.push(result);
+        return result;
+    }
+    initMemory(key) {
+        if (!this.memory[key]) {
+            this.memory[key] = [];
+        }
+        return this.memory[key];
+    }
 }
 
 
@@ -137,9 +170,10 @@ function main() {
     // 50枚画像を生成して、指定のノードに挿入する
     // srcの末尾にはランダムな整数を与えてUnsplashの画像がキャッシュされないようにする
     function insertImage50(target, src) {
+        const uuid = new UUID();
         for (let i=0; i<50; i++) {
             let img = document.createElement('img');
-            img.setAttribute('src', src + Math.floor((Math.random() * 10000000)));
+            img.setAttribute('src', src + uuid.generate(10));
             target.appendChild(img);
         }
     }
