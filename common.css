@@ -22,10 +22,6 @@
     box-sizing: border-box;
 }
 
-html, body {
-    overflow-x: hidden;
-}
-
 .container {
     min-height: 100vh;
     display: grid;
@@ -40,6 +36,7 @@ html, body {
     width: 100%;
     position: relative;
     z-index: 1;
+    overflow-x: hidden;
 }
 #main img {
     width: calc(100%/5);
@@ -282,5 +279,11 @@ html, body {
         overflow-x: auto;
         overflow-scrolling: touch;
         -webkit-overflow-scrolling: touch;
+    }
+
+    #menu {
+        position: absolute;
+        top: 0.7rem;
+        right: 0;
     }
 }
