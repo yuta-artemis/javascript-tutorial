@@ -1,31 +1,8 @@
-@import url('https://fonts.googleapis.com/css2?family=Oleo+Script&display=swap');
-
-* {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-}
-
-:root {
-    --active--bg-color: #efefef;
-    --active--color: #333;
-    --passive--bg-color: #666;
-    --passive--color: #efefef;
-}
-
-#random .show {
-    color: var(--active--bg-color);
-}
-#history .show {
-    background: var(--active--bg-color);
-    color: var(--active--color);
-}
 
 
-.panel.hide {
-    display: none;
-}
-.panel.show {
-    display: block;
-}
+
+
+
+
+
 

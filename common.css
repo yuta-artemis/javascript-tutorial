@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Oleo+Script&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Oleo+Script&display=swap");
 
 :root {
     --inactive--background-color: #666;
@@ -12,7 +12,6 @@
 
     --focus--background-color: #efefef;
     --focus--color: #333;
-    
 }
 
 /* Reset */
@@ -39,7 +38,7 @@
     overflow-x: hidden;
 }
 #main img {
-    width: calc(100%/5);
+    width: calc(100% / 5);
     object-fit: cover;
     aspect-ratio: 1 / 1;
     vertical-align: bottom;
@@ -63,18 +62,14 @@
     border-right: 1px solid #444;
 }
 
-
-
 #title {
     width: max-content;
     white-space: nowrap;
 }
 #title_link {
     color: #fff;
-    font-family: 'Oleo Script', cursive;
+    font-family: "Oleo Script", cursive;
 }
-
-
 
 #search_form {
     width: 100%;
@@ -116,13 +111,11 @@
     color: var(--hover--color);
 }
 
-
-
 #random {
     display: flex;
     justify-content: center;
     align-items: center;
-    border-right: 1px solid #444;;
+    border-right: 1px solid #444;
 }
 #random_button {
     font-size: 1.75rem;
@@ -132,8 +125,9 @@
 #random_button:hover {
     color: var(--hover--background-color);
 }
-
-
+#random .show {
+    color: var(--active--bg-color);
+}
 
 #history {
     display: flex;
@@ -157,13 +151,16 @@
     background: var(--hover--background-color);
     color: var(--hover--color);
 }
-
+#history .show {
+    background: var(--active--bg-color);
+    color: var(--active--color);
+}
 
 #menu {
     display: flex;
     justify-content: center;
     align-items: center;
-    border-right: 1px solid #444;;
+    border-right: 1px solid #444;
 }
 #menu_button {
     font-size: 1.75rem;
@@ -173,17 +170,17 @@
 #menu_button:hover {
     color: var(--hover--background-color);
 }
-#menu_button .fa-bars{
-    display: none;
-}
-#menu_button.close .fa-bars{
+#menu_button .fa-bars {
     display: block;
 }
-#menu_button .fa-xmark{
-    display: block;
-}
-#menu_button.close .fa-xmark{
+#menu_button.show .fa-bars {
     display: none;
+}
+#menu_button .fa-xmark {
+    display: none;
+}
+#menu_button.show .fa-xmark {
+    display: block;
 }
 #menu_panel {
     background: #666;
@@ -218,7 +215,6 @@
     color: white;
 }
 
-
 #modal {
     position: fixed;
     top: 0;
@@ -245,7 +241,7 @@
 
 @media (max-width: 767px) {
     #main img {
-        width: calc(100%/2);
+        width: calc(100% / 2);
     }
 
     #header {
@@ -286,4 +282,11 @@
         top: 0.7rem;
         right: 0;
     }
+}
+
+.panel.hide {
+    display: none;
+}
+.panel.show {
+    display: block;
 }
