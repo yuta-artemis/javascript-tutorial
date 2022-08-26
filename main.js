@@ -159,10 +159,6 @@ class UUID {
     }
 }
 
-function handleClickRandomButton (event) {
-    
-}
-
 
 function main() {
     // UnsplashAPIのURL定義
@@ -267,7 +263,7 @@ function main() {
 
 
 
-    // modalの取得
+    // modalの実装
     const modal = document.getElementById('modal');
     modal.addEventListener('click', event => {
         const target = event.target;
@@ -293,20 +289,20 @@ function main() {
     const menu_button = document.getElementById('menu_button');
     const menu_panel  = document.getElementById('menu_panel');
     menu_button.addEventListener('click', event => {
-        menu_button.classList.toggle('close');
-        menu_panel.classList.toggle('close');
+        menu_button.classList.toggle('show');
+        menu_panel.classList.toggle('show');
     });
     document.addEventListener('click', event => {
         const target = event.target;
         if (target.closest('#menu_button') || target.closest('#menu_panel')) {
             return ;
         }
-        menu_button.classList.add('close');
-        menu_panel.classList.add('close');
+        menu_button.classList.remove('show');
+        menu_panel.classList.remove('show');
     });
     document.addEventListener('scroll', event => {
-        menu_button.classList.add('close');
-        menu_panel.classList.add('close');
+        menu_button.classList.remove('show');
+        menu_panel.classList.remove('show');
     });
 }
 main();

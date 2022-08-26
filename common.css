@@ -192,13 +192,13 @@
     right: 0;
     width: 300px;
     height: 100%;
-    transform: translate(0, 0);
+    transform: translate(100%, 0);
     transition: all 0.5s;
     padding: 10px;
     color: white;
 }
-#menu_panel.close {
-    transform: translate(100%, 0);
+#menu_panel.show {
+    transform: translate(0, 0);
 }
 #menu_panel ul {
     list-style-type: none;
