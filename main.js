@@ -159,6 +159,10 @@ class UUID {
     }
 }
 
+function handleClickRandomButton (event) {
+    
+}
+
 
 function main() {
     // UnsplashAPIのURL定義
@@ -169,18 +173,29 @@ function main() {
 
     // 50枚画像を生成して、指定のノードに挿入する
     // srcの末尾にはランダムな整数を与えてUnsplashの画像がキャッシュされないようにする
+    // function insertImage50(target, src) {
+    //     const uuid = new UUID();
+    //     for (let i=0; i<50; i++) {
+    //         let img = document.createElement('img');
+    //         img.setAttribute('src', src + uuid.generate(10));
+    //         target.appendChild(img);
+    //     }
+    // }
+
     function insertImage50(target, src) {
         const uuid = new UUID();
         for (let i=0; i<50; i++) {
             let img = document.createElement('img');
-            img.setAttribute('src', src + uuid.generate(10));
-            target.appendChild(img);
+            fetch(src + uuid.generate(10)).then(res => {
+                img.setAttribute('src', res.url);
+                target.appendChild(img);
+            });
         }
     }
 
     // 履歴を表示するエリア、画像を表示させるエリアの取得
-    const history_area = document.querySelector('#history');
-    const draw_area = document.querySelector('#main');
+    const history_area = document.getElementById('history');
+    const draw_area = document.getElementById('main');
 
     const page = new Page();
     page.setTabArea(history_area);
@@ -198,8 +213,8 @@ function main() {
     });
 
     // 検索実行時の処理
-    const form = document.querySelector('#search_form');
-    const input = document.querySelector('#search_input');
+    const form = document.getElementById('search_form');
+    const input = document.getElementById('search_input');
     function onSubmit(event) {
         event.preventDefault();
         // 検索語句の取得とクリア
@@ -225,9 +240,11 @@ function main() {
     // tabとpanelを生成
     // tabListの0番目＝現在生成したtabのelemをrando_iconにすり替えpageに管理させる
     const [tab, panel] = page.addTab();
-    page.tabList[0][0].elem = document.querySelector('#random_button');
+    page.tabList[0][0].elem = document.getElementById('random_button');
     page.panelArea.appendChild(panel.elem);
 
+
+    
     // ランダムページの表示
     function makeRandomImage() {
         // ランダム表示をするときに画像の一括削除を用意にするため、wrapperとしてdivを作成
@@ -238,12 +255,58 @@ function main() {
     }
     makeRandomImage();
 
+
+
     // ランダムアイコンをクリックしたときの処理
-    document.querySelector('#random_button').addEventListener('click', event => {
+    document.getElementById('random_button').addEventListener('click', event => {
         const target = event.target;
         page.focus(0);
         panel.elem.firstChild.remove();
         makeRandomImage();
+    });
+
+
+
+    // modalの取得
+    const modal = document.getElementById('modal');
+    modal.addEventListener('click', event => {
+        const target = event.target;
+        if (target.closest("#modal")) {  
+            modal.innerHTML = "";
+            modal.classList.remove('show');
+        }
+    });
+    // 画像がクリックされたときの処理
+    document.addEventListener('click', event => {
+        const target = event.target;
+        if (target.nodeName !== "IMG" || target.classList.contains('clone')) {
+            return ;
+        }
+        const clone = target.cloneNode();
+        clone.classList.add('clone');
+        modal.appendChild( clone );
+        modal.classList.add('show');
+    });
+
+
+    // ハンバーガーメニュー実装
+    const menu_button = document.getElementById('menu_button');
+    const menu_panel  = document.getElementById('menu_panel');
+    menu_button.addEventListener('click', event => {
+        menu_button.classList.toggle('close');
+        menu_panel.classList.toggle('close');
+    });
+    document.addEventListener('click', event => {
+        const target = event.target;
+        if (target.closest('#menu_button') || target.closest('#menu_panel')) {
+            return ;
+        }
+        menu_button.classList.add('close');
+        menu_panel.classList.add('close');
+    });
+    document.addEventListener('scroll', event => {
+        menu_button.classList.add('close');
+        menu_panel.classList.add('close');
     });
 }
 main();
